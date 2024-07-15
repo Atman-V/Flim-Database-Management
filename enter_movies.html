@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter Movies</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg fill="rgba(0,0,0,0.6)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat;
+      background-position: right 10px top 50%;
+      background-size: 12px auto;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .actor {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .actor label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .actor input[type="text"],
+    .actor select {
+      width: calc(50% - 10px);
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .actor:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Enter Movie Details</h1>
+  <form action="save_movie.php" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" required><br>
+
+    <label for="duration">Duration (in minutes):</label>
+    <input type="number" id="duration" name="duration" required><br>
+
+    <label for="plot_summary">Plot Summary:</label><br>
+    <textarea id="plot_summary" name="plot_summary" rows="4" cols="50"></textarea><br>
+
+    <h2>Director:</h2>
+    <label for="director_name">Name:</label>
+    <input type="text" id="director_name" name="director_name" required><br>
+
+    <label for="director_gender">Gender:</label>
+    <select id="director_gender" name="director_gender">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select><br>
+
+    <label for="director_nationality">Nationality:</label>
+    <input type="text" id="director_nationality" name="director_nationality"><br>
+
+    <div id="actors">
+      <h2>Actors:</h2>
+      <div class="actor">
+        <label for="actor_name_1">Name:</label>
+        <input type="text" id="actor_name_1" name="actor_name[]" required>
+
+        <label for="actor_gender_1">Gender:</label>
+        <select id="actor_gender_1" name="actor_gender[]">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="actor_nationality_1">Nationality:</label>
+        <input type="text" id="actor_nationality_1" name="actor_nationality[]">
+      </div>
+    </div>
+    <button type="button" onclick="addActor()">Add Actor</button><br>
+
+    <label for="budget">Budget:</label>
+    <input type="number" id="budget" name="budget" required><br>
+
+    <label for="producer_name">Producer Name:</label>
+    <input type="text" id="producer_name" name="producer_name" required><br>
+
+    <label for="release_date">Release Date:</label>
+    <input type="date" id="release_date" name="release_date" required><br>
+
+    <label for="trailer_link">YouTube Trailer Link:</label>
+    <input type="text" id="trailer_link" name="trailer_link" required><br>
+
+    <input type="submit" value="Save">
+  </form>
+
+  <script>
+    let actorCounter = 1;
+
+    function addActor() {
+      actorCounter++;
+      const actorsDiv = document.getElementById("actors");
+      const newActorDiv = document.createElement("div");
+      newActorDiv.className = "actor";
+
+      const actorHTML = `
+        <label for="actor_name_${actorCounter}">Name:</label>
+        <input type="text" id="actor_name_${actorCounter}" name="actor_name[]" required>
+
+        <label for="actor_gender_${actorCounter}">Gender:</label>
+        <select id="actor_gender_${actorCounter}" name="actor_gender[]">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="actor_nationality_${actorCounter}">Nationality:</label>
+        <input type="text" id="actor_nationality_${actorCounter}" name="actor_nationality[]">
+      `;
+      newActorDiv.innerHTML = actorHTML;
+      actorsDiv.appendChild(newActorDiv);
+    }
+  </script>
+</div>
+</body>
+</html>
+
